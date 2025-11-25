@@ -335,11 +335,15 @@ function initAllLines(ctx) {
 const verticalLinePlugin = {
     id: 'verticalLinePlugin',
     afterDraw: (chart) => {
-        if (chart.tooltip._active && chart.tooltip._active.length) {
+        const activeElements = chart.getActiveElements();
+
+        if (activeElements && activeElements.length) {
             const ctx = chart.ctx;
             ctx.save();
-            const activePoint = chart.tooltip._active[0];
+
+            const activePoint = activeElements[0];
             const x = activePoint.element.x;
+
             const topY = chart.scales.y.top;
             const bottomY = chart.scales.y.bottom;
 
@@ -368,6 +372,12 @@ const options = {
             enabled: true,
             mode: 'nearest', // 与 interaction 保持一致
             intersect: false,
+            // 1. 告诉 Chart.js 使用我们刚注册的函数
+            position: 'mouseFollowY',
+
+            // 2. (推荐) 让提示框以我们返回的 y 坐标为中心
+            //    这能防止提示框在图表顶部/底部时被遮挡
+            yAlign: 'center'
         },
         legend: { display: true },
         verticalLinePlugin: {} // 自定义插件保持不变
@@ -381,4 +391,26 @@ const options = {
             title: { display: true, text: '每克价格 (日元/g)' }
         }
     }
+};
+
+/**
+ * 注册一个自定义的 Tooltip 定位器
+ * @param {Array} items - 当前激活的 tooltip 元素
+ * @param {object} eventPosition - 包含 {x, y} 的鼠标/触摸位置
+ * @returns {object|false} - 返回 {x, y} 坐标或 false
+ */
+Chart.Tooltip.positioners.mouseFollowY = function(items, eventPosition) {
+    // 如果没有找到元素，则不显示
+    if (!items.length) {
+        return false;
+    }
+
+    // 返回一个坐标对象：
+    return {
+        // X 轴：使用数据点的 X 坐标 (与你的红线保持一致)
+        x: items[0].element.x,
+
+        // Y 轴：使用鼠标事件的 Y 坐标 (你想要的效果)
+        y: eventPosition.y
+    };
 };
