@@ -232,6 +232,41 @@ function lineDocobuyYuying() {
     return generateLineData(6.1, 10.0, 0.1, 560 + 42 * 19 + 70 * 40 + 98, 98, fixedFee, xy);
 }
 
+function lineJPGOODBUYPhoenix() {
+    const RMB_TO_JPY = 1 / 0.04686;
+
+    const phoenixData = [
+        { weight: 0.3, price: 35 },
+        { weight: 0.5, price: 46 },
+        { weight: 0.6, price: 53 },
+        { weight: 0.7, price: 61 },
+        { weight: 0.8, price: 68 },
+        { weight: 0.9, price: 75 },
+        { weight: 1.0, price: 79 },
+        { weight: 1.1, price: 86 },
+        { weight: 1.2, price: 93 },
+        { weight: 1.3, price: 99 },
+        { weight: 1.4, price: 105 },
+        { weight: 1.5, price: 111 },
+        { weight: 1.6, price: 118 },
+        { weight: 1.7, price: 125 },
+        { weight: 1.8, price: 131 },
+        { weight: 1.9, price: 138 },
+        { weight: 2.0, price: 145 },
+        { weight: 2.1, price: 151 },
+        { weight: 2.2, price: 157 },
+        { weight: 2.3, price: 163 },
+        { weight: 2.4, price: 169 },
+        { weight: 2.5, price: 176 },
+    ];
+
+    return phoenixData.map(item => ({
+        x: item.weight,
+        y: Number(((item.price * RMB_TO_JPY) / (item.weight * 1000)).toFixed(2))
+    }));
+}
+
+
 // 主函数：渲染所有线路
 // 注意 Y 值存在波动，波动上涨最大为 步长 / 前一个点的 x 值
 // 比如 筋斗云 1kg 0.75日元/g，假如恰好为 501g 的货物，则新每克价格 0.75*1000/500 = 1.5 日元/g，涨幅为 步长 500 / 前一个点的 x 500，即上涨 100% 一倍
@@ -254,6 +289,7 @@ function initAllLines(ctx) {
     const elfShentong = lineElfShentong();
     const rakutaoShentong = lineRakutaoShentong();
     const docobuyYuying = lineDocobuyYuying();
+    const jpgoodbuyPhoenix = lineJPGOODBUYPhoenix();
 
     new Chart(ctx, {
         type: 'line',
@@ -308,8 +344,8 @@ function initAllLines(ctx) {
                     backgroundColor: 'rgba(100,181,246,0.3)'
                 },
                 {
-                    label: '申通-精灵集市',
-                    data: elfShentong,
+                    label: '凤凰-JPGB-不能合箱',
+                    data: jpgoodbuyPhoenix,
                     borderColor: '#F48FB1',
                     backgroundColor: 'rgba(244,143,177,0.3)'
                 },
