@@ -28,7 +28,7 @@ function lineRainbowPlus() {
 
 // 彩虹桥
 function lineRainbow() {
-    return generateLineData(0.5, 10, 0.1, 900, 160, 200);
+    return generateLineData(0.5, 3, 0.1, 900, 160, 200);
 }
 
 // 彩虹桥 Lite
