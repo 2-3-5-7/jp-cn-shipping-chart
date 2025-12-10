@@ -229,7 +229,9 @@ function lineDocobuyYuying() {
 
     generateLineData(0.3, 2.0, 0.1, 644, 42, fixedFee, xy);
     generateLineData(2.1, 6.0, 0.1, 560 + 42 * 19 + 70, 70, fixedFee, xy);
-    return generateLineData(6.1, 10.0, 0.1, 560 + 42 * 19 + 70 * 40 + 98, 98, fixedFee, xy);
+    generateLineData(6.1, 10.0, 0.1, 560 + 42 * 19 + 70 * 40 + 98, 98, fixedFee, xy);
+
+    return xy;
 }
 
 function lineJPGOODBUYPhoenix() {
@@ -266,6 +268,21 @@ function lineJPGOODBUYPhoenix() {
     }));
 }
 
+function lineAirline() {
+    return generateLineData(1, 10.0, 1, 2050, 700, 200);
+}
+
+function lineEMS() {
+    const fixedFee = 200;
+    const xy = [];
+
+    generateLineData(0.6, 1, 0.1, 1600, 150, fixedFee, xy);
+    generateLineData(1.25, 2, 0.25, 2500, 300, fixedFee, xy);
+    generateLineData(2.5, 6, 0.5, 3900, 500, fixedFee, xy);
+    generateLineData(7, 10, 1, 8200, 800, fixedFee, xy);
+
+    return xy;
+}
 
 // 主函数：渲染所有线路
 // 注意 Y 值存在波动，波动上涨最大为 步长 / 前一个点的 x 值
@@ -290,6 +307,8 @@ function initAllLines(ctx) {
     const rakutaoShentong = lineRakutaoShentong();
     const docobuyYuying = lineDocobuyYuying();
     const jpgoodbuyPhoenix = lineJPGOODBUYPhoenix();
+    const airline = lineAirline();
+    const ems = lineEMS();
 
     new Chart(ctx, {
         type: 'line',
@@ -360,6 +379,18 @@ function initAllLines(ctx) {
                     data: docobuyYuying,
                     borderColor: '#8D6E63',
                     backgroundColor: 'rgba(141,110,99,0.3)'
+                },
+                {
+                    label: '空运-乐一番',
+                    data: airline,
+                    borderColor: '#78909C',
+                    backgroundColor: 'rgba(120,144,156,0.3)'
+                },
+                {
+                    label: 'EMS-乐一番',
+                    data: ems,
+                    borderColor: '#D4E157',
+                    backgroundColor: 'rgba(212,225,87,0.3)'
                 },
             ]
         },
