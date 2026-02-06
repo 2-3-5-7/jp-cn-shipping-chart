@@ -227,9 +227,9 @@ function lineDocobuyYuying() {
     const fixedFee = 200;
     const xy = [];
 
-    generateLineData(0.3, 2.0, 0.1, 644, 42, fixedFee, xy);
-    generateLineData(2.1, 6.0, 0.1, 560 + 42 * 19 + 70, 70, fixedFee, xy);
-    generateLineData(6.1, 10.0, 0.1, 560 + 42 * 19 + 70 * 40 + 98, 98, fixedFee, xy);
+    generateLineData(0.3, 2.0, 0.1, 736, 48, fixedFee, xy);
+    generateLineData(2.1, 6.0, 0.1, 640 + 48 * 19 + 80, 80, fixedFee, xy);
+    generateLineData(6.1, 10.0, 0.1, 640 + 48 * 19 + 80 * 40 + 112, 112, fixedFee, xy);
 
     return xy;
 }
